@@ -44,7 +44,7 @@ export default function RootLayout({
               </Link>
 
               <nav className="flex items-center gap-4">
-                <Link href="/dashboard" className="text-muted hover:text-foreground transition-colors">
+                <Link href="/dashboard" className="text-amber-50 hover:text-foreground transition-colors">
                   Dashboard
                 </Link>
 
