@@ -1,5 +1,5 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@/app/generated/prisma/client";
+import { PrismaClient } from "@/app/generated/prisma";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -11,6 +11,7 @@ function createPrismaClient() {
     throw new Error("DATABASE_URL is not set.")
   }
 
+  // NeonDB recommends verify-full or adding sslmode=verify-full to the URL
   const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({ adapter });
 }

@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../app/generated/prisma"
 }
 
@@ -29,6 +29,7 @@ model Event {
   updateAt    DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   invite EventInvite?
+  rsvps  EventRsvp[]
 
   @@index([ownerUserId, createdAt(sort: Desc)], map: "idx_events_owner")
   @@map("events")
@@ -57,6 +58,8 @@ model EventRsvp {
   respondedAt     DateTime   @default(now()) @map("responded_at") @db.Timestamptz(6)
   createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@unique([eventId, emailNormalized])
   @@index([eventId, respondedAt(sort: Desc)], map: "idx_rsvps_event")
